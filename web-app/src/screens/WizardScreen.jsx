@@ -36,68 +36,78 @@ export default function WizardScreen({ initialData, onCompleteWizard, onCancel }
   const [currentStep, setCurrentStep] = useState(0);
   const [errors, setErrors] = useState({});
 
-  const [formData, setFormData] = useState(
-    initialData || {
-      // Step 0
-      patient_id: `P-${Math.floor(100 + Math.random() * 900)}-2026`,
-      data_collection_date: new Date().toISOString().split('T')[0],
+  const defaultEmptyState = {
+    // Step 0: ID & Date
+    patient_id: '',
+    data_collection_date: new Date().toISOString().split('T')[0],
 
-      // Step 1: Eligibility
-      inclusion_age_18: true,
-      inclusion_dialysis_3months: true,
-      inclusion_dialysis_center: true,
-      inclusion_informed_consent: true,
-      exclusion_bleeding: false,
-      exclusion_transfusion: false,
-      exclusion_hematologic_malignancy: false,
-      exclusion_chemotherapy: false,
-      exclusion_pregnancy: false,
-      eligibility_status: 'Included',
+    // Step 1: Eligibility Criteria (all unchecked)
+    inclusion_age_18: false,
+    inclusion_dialysis_3months: false,
+    inclusion_dialysis_center: false,
+    inclusion_informed_consent: false,
+    exclusion_bleeding: false,
+    exclusion_transfusion: false,
+    exclusion_hematologic_malignancy: false,
+    exclusion_chemotherapy: false,
+    exclusion_pregnancy: false,
+    eligibility_status: 'Excluded',
 
-      // Step 2: Demographics
-      age_years: '52',
-      gender: 'Male',
-      marital_status: 'Married',
-      education_level: 'Secondary',
-      employment_status: 'Unemployed-Retired',
-      residence_type: 'Urban',
-      weight_kg: '74',
-      height_cm: '170',
+    // Step 2: Demographics
+    age_years: '',
+    gender: '',
+    marital_status: '',
+    education_level: '',
+    employment_status: '',
+    residence_type: '',
+    weight_kg: '',
+    height_cm: '',
 
-      // Step 3: Medical History
-      esrd_cause: 'Diabetic Nephropathy',
-      esrd_cause_other: '',
-      ckd_duration_years: '5',
-      comorbidities: ['Diabetes Mellitus', 'Hypertension'],
-      hospitalization_count: '1 time',
+    // Step 3: Medical History
+    esrd_cause: '',
+    esrd_cause_other: '',
+    ckd_duration_years: '',
+    comorbidities: [],
+    hospitalization_count: '',
 
-      // Step 4: Dialysis
-      dialysis_duration_value: '18',
-      dialysis_duration_unit: 'Months',
-      dialysis_sessions_per_week: '3 sessions/week',
-      session_duration: '4 hours',
-      vascular_access_type: 'Arteriovenous Fistula (AVF)',
-      kt_v: '1.30',
+    // Step 4: Dialysis Parameters
+    dialysis_duration_value: '',
+    dialysis_duration_unit: 'Months',
+    dialysis_sessions_per_week: '',
+    session_duration: '',
+    vascular_access_type: '',
+    kt_v: '',
 
-      // Step 5: Laboratory
-      hemoglobin_g_dl: '9.6',
-      anemia_severity: 'Moderate',
-      ferritin_ng_ml: '290',
-      tsat_percent: '21',
-      albumin_g_dl: '3.9',
-      crp_mg_l: '5.5',
-      ipth_pg_ml: '220',
+    // Step 5: Laboratory Tests
+    hemoglobin_g_dl: '',
+    anemia_severity: '',
+    ferritin_ng_ml: '',
+    tsat_percent: '',
+    albumin_g_dl: '',
+    crp_mg_l: '',
+    ipth_pg_ml: '',
 
-      // Step 6: Treatments
-      esa_therapy: true,
-      esa_dose_frequency: 'Epoetin alfa 4000 IU twice weekly',
-      iron_supplementation: 'Intravenous (IV) Iron',
-      vitamin_b12: true,
-      folic_acid: true,
-      blood_transfusion_6months: false,
-      transfusion_units_count: '',
+    // Step 6: Treatments & Transfusions
+    esa_therapy: false,
+    esa_dose_frequency: '',
+    iron_supplementation: '',
+    vitamin_b12: false,
+    folic_acid: false,
+    blood_transfusion_6months: false,
+    transfusion_units_count: '',
+  };
+
+  const [formData, setFormData] = useState(initialData || defaultEmptyState);
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    } else {
+      setFormData(defaultEmptyState);
+      setCurrentStep(0);
+      setErrors({});
     }
-  );
+  }, [initialData]);
 
   // Auto calculate eligibility whenever step 1 criteria changes
   useEffect(() => {
