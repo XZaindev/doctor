@@ -11,6 +11,7 @@ import AnalyticsScreen from './screens/AnalyticsScreen';
 import PDFPreviewModal from './screens/PDFPreviewModal';
 import { initialPatients, defaultDoctor } from './utils/mockData';
 import { downloadPatientPDF } from './utils/pdfGenerator';
+import { LayoutDashboard, UserPlus, FileSpreadsheet, BarChart3, User } from 'lucide-react';
 import './styles/theme.css';
 
 export default function App() {
@@ -96,7 +97,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* Left Sidebar */}
+      {/* Left Desktop Sidebar */}
       <Sidebar
         activeTab={isViewingSummary ? 'summary' : activeTab}
         setActiveTab={(tab) => {
@@ -115,6 +116,7 @@ export default function App() {
           setActiveTab={setActiveTab}
           doctor={doctor}
           onNewPatient={handleNewPatient}
+          onOpenAuth={() => setIsAuthOpen(true)}
         />
 
         <div className="page-body">
@@ -165,6 +167,58 @@ export default function App() {
           )}
         </div>
       </main>
+
+      {/* Mobile Fixed Bottom Navigation Bar */}
+      <nav className="mobile-bottom-nav">
+        <button
+          className={`mobile-nav-btn ${!isViewingSummary && activeTab === 'dashboard' ? 'active' : ''}`}
+          onClick={() => {
+            setIsViewingSummary(false);
+            setActiveTab('dashboard');
+          }}
+        >
+          <LayoutDashboard size={20} />
+          <span>Overview</span>
+        </button>
+
+        <button
+          className={`mobile-nav-btn ${!isViewingSummary && activeTab === 'wizard' ? 'active' : ''}`}
+          onClick={handleNewPatient}
+        >
+          <UserPlus size={20} />
+          <span>New eCRF</span>
+        </button>
+
+        <button
+          className={`mobile-nav-btn ${!isViewingSummary && activeTab === 'records' ? 'active' : ''}`}
+          onClick={() => {
+            setIsViewingSummary(false);
+            setActiveTab('records');
+          }}
+        >
+          <FileSpreadsheet size={20} />
+          <span>Patients ({patients.length})</span>
+        </button>
+
+        <button
+          className={`mobile-nav-btn ${!isViewingSummary && activeTab === 'analytics' ? 'active' : ''}`}
+          onClick={() => {
+            setIsViewingSummary(false);
+            setActiveTab('analytics');
+          }}
+        >
+          <BarChart3 size={20} />
+          <span>Analytics</span>
+        </button>
+
+        <button
+          className="mobile-nav-btn"
+          onClick={() => setIsAuthOpen(true)}
+        >
+          <User size={20} />
+          <span>Profile</span>
+        </button>
+      </nav>
 
       {/* Doctor Profile Modal */}
       <AuthModal

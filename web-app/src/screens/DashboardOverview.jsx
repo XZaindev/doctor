@@ -35,39 +35,39 @@ export default function DashboardOverview({
       <div style={{
         background: 'linear-gradient(135deg, #008B8B, #005F5F)',
         color: '#ffffff',
-        borderRadius: '18px',
-        padding: '2rem 2.25rem',
-        marginBottom: '2rem',
-        boxShadow: '0 10px 25px rgba(0, 139, 139, 0.25)',
+        borderRadius: '16px',
+        padding: '1.5rem',
+        marginBottom: '1.5rem',
+        boxShadow: '0 8px 20px rgba(0, 139, 139, 0.22)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '1.5rem'
+        gap: '1.25rem'
       }}>
         <div style={{ maxWidth: '620px' }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            padding: '0.3rem 0.8rem',
+            padding: '0.25rem 0.75rem',
             background: 'rgba(255,255,255,0.15)',
             borderRadius: '999px',
-            fontSize: '0.8rem',
+            fontSize: '0.75rem',
             fontWeight: '600',
-            marginBottom: '0.75rem'
+            marginBottom: '0.6rem'
           }}>
-            <Hospital size={14} /> Ibn Sina Center for Dialysis & Kidney Disease
+            <Hospital size={13} /> Ibn Sina Center for Dialysis
           </div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: '800', margin: '0 0 0.5rem 0', color: '#ffffff' }}>
-            Welcome back, {doctor?.full_name || 'Dr. Mohammed'}!
+          <h2 style={{ fontSize: '1.45rem', fontWeight: '800', margin: '0 0 0.4rem 0', color: '#ffffff' }}>
+            Welcome, {doctor?.full_name || 'Dr. Mohammed'}!
           </h2>
-          <p style={{ fontSize: '0.95rem', color: '#e0f2f1', margin: 0, lineHeight: 1.5 }}>
-            Electronic Case Report Form (eCRF) & Data Collection Platform for the Evaluation of Anemia Patterns and Iron Therapy in End-Stage Renal Disease.
+          <p style={{ fontSize: '0.88rem', color: '#e0f2f1', margin: 0, lineHeight: 1.45 }}>
+            Electronic Case Report Form (eCRF) & Data Collection for Anemia & Iron Management Study.
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '0.6rem', width: '100%', maxWidth: '380px' }}>
           <button
             className="btn"
             onClick={onNewPatient}
@@ -75,12 +75,14 @@ export default function DashboardOverview({
               background: '#ffffff',
               color: '#008B8B',
               fontWeight: '700',
-              padding: '0.75rem 1.4rem',
-              borderRadius: '12px',
-              boxShadow: '0 4px 10px rgba(0,0,0,0.15)'
+              padding: '0.65rem 1.1rem',
+              borderRadius: '10px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+              flex: '1 1 160px',
+              fontSize: '0.88rem'
             }}
           >
-            <UserPlus size={18} /> Start New Patient eCRF
+            <UserPlus size={16} /> New eCRF
           </button>
           <button
             className="btn"
@@ -89,11 +91,13 @@ export default function DashboardOverview({
               background: 'rgba(255,255,255,0.2)',
               color: '#ffffff',
               border: '1px solid rgba(255,255,255,0.3)',
-              padding: '0.65rem 1.2rem',
-              borderRadius: '12px'
+              padding: '0.65rem 1.1rem',
+              borderRadius: '10px',
+              flex: '1 1 150px',
+              fontSize: '0.88rem'
             }}
           >
-            <FileSpreadsheet size={16} /> View Patient Registry
+            <FileSpreadsheet size={16} /> Patient Registry
           </button>
         </div>
       </div>

@@ -26,57 +26,61 @@ export default function PDFPreviewModal({ isOpen, onClose, patientData, doctor, 
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '0.6rem',
           background: '#0f172a',
           color: '#ffffff',
-          padding: '0.85rem 1.25rem',
+          padding: '0.75rem 1rem',
           borderRadius: '12px',
-          marginBottom: '1rem'
+          marginBottom: '0.85rem'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <FileText size={18} color="#20B2AA" />
-            <span style={{ fontWeight: '700', fontSize: '0.9rem' }}>
-              Document Preview: Patient_{patientData.patient_id}.pdf
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+            <FileText size={18} color="#20B2AA" style={{ flexShrink: 0 }} />
+            <span style={{ fontWeight: '700', fontSize: '0.85rem', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+              Report: {patientData.patient_id}
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
             <button
               className="btn btn-secondary"
-              style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem' }}
+              style={{ padding: '0.4rem 0.75rem', fontSize: '0.78rem', minHeight: '34px' }}
               onClick={handlePrint}
             >
-              <Printer size={15} /> Print
+              <Printer size={14} /> Print
             </button>
             <button
               className="btn btn-primary"
-              style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem' }}
+              style={{ padding: '0.4rem 0.75rem', fontSize: '0.78rem', minHeight: '34px' }}
               onClick={() => onDownloadPDF(patientData)}
             >
-              <Download size={15} /> Download PDF
+              <Download size={14} /> PDF
             </button>
             <button
               onClick={onClose}
-              style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}
+              style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '6px', marginLeft: '4px' }}
             >
               <X size={20} />
             </button>
           </div>
         </div>
 
-        {/* Printable Paper A4 Viewport */}
-        <div
-          id="printable-report"
-          style={{
-            background: '#ffffff',
-            borderRadius: '8px',
-            padding: '2.5rem',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
-            color: '#0f172a',
-            fontFamily: 'sans-serif',
-            fontSize: '0.85rem',
-            lineHeight: '1.4'
-          }}
-        >
+        {/* Printable Paper A4 Viewport Container */}
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <div
+            id="printable-report"
+            style={{
+              background: '#ffffff',
+              borderRadius: '8px',
+              padding: '1.5rem',
+              minWidth: '580px',
+              boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
+              color: '#0f172a',
+              fontFamily: 'sans-serif',
+              fontSize: '0.85rem',
+              lineHeight: '1.4'
+            }}
+          >
           {/* Header Banner */}
           <div style={{ borderBottom: '3px solid #008B8B', paddingBottom: '1rem', marginBottom: '1.25rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -272,5 +276,6 @@ export default function PDFPreviewModal({ isOpen, onClose, patientData, doctor, 
         </div>
       </div>
     </div>
+  </div>
   );
 }

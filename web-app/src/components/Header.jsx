@@ -1,29 +1,34 @@
 // src/components/Header.jsx
 import React from 'react';
-import { Stethoscope, PlusCircle, Search, ShieldCheck, Download } from 'lucide-react';
+import { PlusCircle, ShieldCheck, Stethoscope, User } from 'lucide-react';
 
-export default function Header({ activeTab, setActiveTab, doctor, onNewPatient }) {
+export default function Header({ activeTab, setActiveTab, doctor, onNewPatient, onOpenAuth }) {
   const getTabTitle = () => {
     switch (activeTab) {
       case 'dashboard':
         return {
           title: 'Research Study Dashboard',
-          subtitle: 'Ibn Sina Center for Dialysis & Kidney Disease — Anemia Cohort',
+          subtitle: 'Ibn Sina Center for Dialysis & Kidney Disease',
         };
       case 'wizard':
         return {
-          title: 'Patient Data Collection Wizard',
-          subtitle: '7-Step Standardized Electronic Case Report Form (eCRF)',
+          title: 'Patient eCRF Wizard',
+          subtitle: '7-Step Standardized Electronic Case Report Form',
         };
       case 'records':
         return {
-          title: 'Enrolled Patient Database',
-          subtitle: 'Search, filter, review, and export individual patient medical records',
+          title: 'Patient Database',
+          subtitle: 'Review and export patient medical records',
         };
       case 'analytics':
         return {
-          title: 'Clinical Data Analytics',
-          subtitle: 'Statistical summary of anemia staging, biomarkers, and therapies',
+          title: 'Clinical Analytics',
+          subtitle: 'Statistical summary of anemia staging & biomarkers',
+        };
+      case 'summary':
+        return {
+          title: 'Patient Case Summary',
+          subtitle: 'Verification, certification & PDF generation',
         };
       default:
         return {
@@ -39,50 +44,88 @@ export default function Header({ activeTab, setActiveTab, doctor, onNewPatient }
     <header style={{
       background: '#ffffff',
       borderBottom: '1px solid #e2e8f0',
-      padding: '1.25rem 2rem',
+      padding: '0.85rem 1.25rem',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       position: 'sticky',
       top: 0,
-      zIndex: 10
+      zIndex: 50,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
     }}>
-      <div>
-        <h1 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#0f172a', margin: 0, letterSpacing: '-0.02em' }}>
-          {title}
-        </h1>
-        <p style={{ fontSize: '0.85rem', color: '#64748b', margin: '2px 0 0 0' }}>
-          {subtitle}
-        </p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+        {/* Mobile Mini Logo */}
+        <div style={{
+          width: '34px',
+          height: '34px',
+          borderRadius: '9px',
+          background: 'linear-gradient(135deg, #008B8B, #20B2AA)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0
+        }}>
+          <Stethoscope size={18} color="#ffffff" />
+        </div>
+
+        <div style={{ minWidth: 0, overflow: 'hidden' }}>
+          <h1 style={{
+            fontSize: '1.15rem',
+            fontWeight: '800',
+            color: '#0f172a',
+            margin: 0,
+            letterSpacing: '-0.02em',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden'
+          }}>
+            {title}
+          </h1>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#64748b',
+            margin: 0,
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden'
+          }}>
+            {subtitle}
+          </p>
+        </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
         {activeTab !== 'wizard' && (
           <button
             onClick={onNewPatient}
             className="btn btn-primary"
-            style={{ padding: '0.6rem 1.1rem', fontSize: '0.875rem' }}
+            style={{ padding: '0.45rem 0.85rem', fontSize: '0.82rem', borderRadius: '8px' }}
           >
-            <PlusCircle size={17} />
-            <span>New Patient Entry</span>
+            <PlusCircle size={15} />
+            <span>New eCRF</span>
           </button>
         )}
 
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          padding: '0.45rem 0.85rem',
-          background: '#f0fdfa',
-          border: '1px solid #a7f3d0',
-          borderRadius: '999px',
-          color: '#065f46',
-          fontSize: '0.8rem',
-          fontWeight: '600'
-        }}>
-          <ShieldCheck size={15} />
-          <span>IRB Approved Study</span>
-        </div>
+        <button
+          onClick={onOpenAuth}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '34px',
+            height: '34px',
+            borderRadius: '50%',
+            background: '#008B8B',
+            color: '#ffffff',
+            border: 'none',
+            fontWeight: '700',
+            fontSize: '0.8rem',
+            cursor: 'pointer'
+          }}
+          title={doctor?.full_name || 'Doctor Profile'}
+        >
+          {doctor?.full_name ? doctor.full_name.charAt(0) : <User size={16} />}
+        </button>
       </div>
     </header>
   );

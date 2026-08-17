@@ -7,8 +7,6 @@ import {
   BarChart3,
   Stethoscope,
   Activity,
-  FileText,
-  ShieldAlert,
   LogOut,
   Hospital
 } from 'lucide-react';
@@ -22,7 +20,7 @@ export default function Sidebar({ activeTab, setActiveTab, doctor, onOpenAuth, p
   ];
 
   return (
-    <aside style={{
+    <aside className="sidebar-desktop" style={{
       width: '260px',
       backgroundColor: '#0f172a',
       color: '#f8fafc',

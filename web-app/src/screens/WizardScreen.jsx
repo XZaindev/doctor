@@ -185,7 +185,7 @@ export default function WizardScreen({ initialData, onCompleteWizard, onCancel }
 
   return (
     <div className="animate-fade-in" style={{ paddingBottom: '3rem' }}>
-      {/* Wizard Step Navigation Bar */}
+      {/* Desktop Wizard Step Navigation Bar */}
       <div className="stepper-header">
         {STEPS.map((step) => {
           const Icon = step.icon;
@@ -208,6 +208,37 @@ export default function WizardScreen({ initialData, onCompleteWizard, onCancel }
             </div>
           );
         })}
+      </div>
+
+      {/* Mobile Compact Progress Bar */}
+      <div className="mobile-stepper-compact">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+          <div>
+            <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#008B8B', textTransform: 'uppercase' }}>
+              Step {currentStep + 1} / {STEPS.length}
+            </span>
+            <div style={{ fontSize: '0.95rem', fontWeight: '800', color: '#0f172a' }}>
+              {STEPS[currentStep].title}
+            </div>
+          </div>
+          <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#64748b' }}>
+            {Math.round(((currentStep + 1) / STEPS.length) * 100)}%
+          </span>
+        </div>
+
+        {/* Progress Track */}
+        <div style={{ height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden', display: 'flex', gap: '3px' }}>
+          {STEPS.map((s) => (
+            <div
+              key={s.id}
+              style={{
+                flex: 1,
+                background: s.id <= currentStep ? '#008B8B' : '#e2e8f0',
+                transition: 'background 0.2s ease'
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Main Step Card */}
@@ -1083,13 +1114,14 @@ export default function WizardScreen({ initialData, onCompleteWizard, onCancel }
 
         {/* Wizard Footer Navigation Controls */}
         <div style={{
-          marginTop: '2.5rem',
-          paddingTop: '1.5rem',
+          marginTop: '2rem',
+          paddingTop: '1.25rem',
           borderTop: '1px solid #e2e8f0',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '1rem'
+          flexWrap: 'wrap',
+          gap: '0.75rem'
         }}>
           <div>
             {currentStep > 0 && (
@@ -1097,13 +1129,14 @@ export default function WizardScreen({ initialData, onCompleteWizard, onCancel }
                 type="button"
                 className="btn btn-secondary"
                 onClick={handlePrev}
+                style={{ padding: '0.6rem 1rem' }}
               >
-                <ArrowLeft size={16} /> Back: {STEPS[currentStep - 1].short}
+                <ArrowLeft size={16} /> Back
               </button>
             )}
           </div>
 
-          <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', gap: '0.6rem', flex: '1 1 auto', justifyContent: 'flex-end' }}>
             {onCancel && (
               <button type="button" className="btn btn-secondary" onClick={onCancel}>
                 Cancel
@@ -1113,15 +1146,15 @@ export default function WizardScreen({ initialData, onCompleteWizard, onCancel }
               type="button"
               className="btn btn-primary"
               onClick={handleNext}
-              style={{ minWidth: '160px' }}
+              style={{ minWidth: '140px' }}
             >
               {currentStep === STEPS.length - 1 ? (
                 <>
-                  <Sparkles size={18} /> Complete & Review
+                  <Sparkles size={18} /> Review Case
                 </>
               ) : (
                 <>
-                  Next: {STEPS[currentStep + 1].short} <ArrowRight size={16} />
+                  Next <ArrowRight size={16} />
                 </>
               )}
             </button>

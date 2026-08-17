@@ -51,12 +51,18 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-family);
   background-color: var(--bg-main);
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -67,12 +73,13 @@ h1, h2, h3, h4, h5, h6 {
 
 button, input, select, textarea {
   font-family: inherit;
+  font-size: inherit;
 }
 
-/* Scrollbar */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #f1f5f9;
@@ -89,6 +96,8 @@ button, input, select, textarea {
 .app-container {
   display: flex;
   min-height: 100vh;
+  width: 100%;
+  position: relative;
 }
 
 .main-content {
@@ -98,10 +107,11 @@ button, input, select, textarea {
   min-width: 0;
   height: 100vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .page-body {
-  padding: 2rem;
+  padding: 1.75rem;
   max-width: 1280px;
   width: 100%;
   margin: 0 auto;
@@ -115,6 +125,7 @@ button, input, select, textarea {
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
   transition: all 0.2s ease;
+  width: 100%;
 }
 
 .med-card:hover {
@@ -125,12 +136,13 @@ button, input, select, textarea {
 .status-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.85rem;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-pill);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .status-badge.included {
@@ -177,12 +189,14 @@ button, input, select, textarea {
   gap: 0.5rem;
   padding: 0.65rem 1.25rem;
   border-radius: var(--radius-md);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid transparent;
   outline: none;
+  min-height: 42px;
+  touch-action: manipulation;
 }
 
 .btn-primary {
@@ -229,6 +243,7 @@ button, input, select, textarea {
 /* Form Controls */
 .form-group {
   margin-bottom: 1.25rem;
+  width: 100%;
 }
 
 .form-label {
@@ -246,13 +261,14 @@ button, input, select, textarea {
 
 .form-input, .form-select, .form-textarea {
   width: 100%;
-  padding: 0.65rem 0.9rem;
+  padding: 0.75rem 0.95rem;
   font-size: 0.95rem;
   color: var(--text-primary);
   background: #ffffff;
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  min-height: 44px;
 }
 
 .form-input:focus, .form-select:focus, .form-textarea:focus {
@@ -265,6 +281,7 @@ button, input, select, textarea {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-top: 0.35rem;
+  display: block;
 }
 
 /* Chips */
@@ -272,13 +289,15 @@ button, input, select, textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .chip-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.35rem;
-  padding: 0.5rem 1rem;
+  padding: 0.55rem 1rem;
   border-radius: var(--radius-pill);
   border: 1.5px solid var(--border-light);
   background: #ffffff;
@@ -287,6 +306,8 @@ button, input, select, textarea {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s ease;
+  min-height: 38px;
+  touch-action: manipulation;
 }
 
 .chip-btn:hover {
@@ -307,13 +328,16 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem 1.1rem;
+  padding: 0.9rem 1.1rem;
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
   background: #ffffff;
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.75rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  gap: 0.75rem;
+  min-height: 52px;
+  touch-action: manipulation;
 }
 
 .toggle-item:hover {
@@ -338,6 +362,7 @@ button, input, select, textarea {
   background: #cbd5e1;
   border-radius: 12px;
   transition: background 0.2s ease;
+  flex-shrink: 0;
 }
 
 .toggle-slider.active {
@@ -360,7 +385,7 @@ button, input, select, textarea {
   transform: translateX(20px);
 }
 
-/* Step Progress Indicator */
+/* Step Progress Indicator (Desktop & Tablet) */
 .stepper-header {
   display: flex;
   align-items: center;
@@ -368,24 +393,28 @@ button, input, select, textarea {
   background: #ffffff;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-light);
-  padding: 1.25rem;
+  padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
   overflow-x: auto;
   gap: 0.5rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .step-node {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   cursor: pointer;
   opacity: 0.6;
   transition: all 0.2s ease;
   white-space: nowrap;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
 }
 
 .step-node.active {
   opacity: 1;
+  background: #f0fdfa;
 }
 
 .step-node.completed {
@@ -393,8 +422,8 @@ button, input, select, textarea {
 }
 
 .step-circle {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: #f1f5f9;
   color: var(--text-secondary);
@@ -404,13 +433,14 @@ button, input, select, textarea {
   font-size: 0.85rem;
   font-weight: 700;
   border: 2px solid var(--border-light);
+  flex-shrink: 0;
 }
 
 .step-node.active .step-circle {
   background: var(--primary);
   color: #ffffff;
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px var(--primary-glow);
+  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
 .step-node.completed .step-circle {
@@ -430,17 +460,74 @@ button, input, select, textarea {
   font-weight: 700;
 }
 
+/* Mobile Stepper Bar */
+.mobile-stepper-compact {
+  display: none;
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Mobile Bottom Navigation Bar */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid #1e293b;
+  z-index: 900;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 0.5rem;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.2);
+}
+
+.mobile-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+  min-width: 58px;
+}
+
+.mobile-nav-btn.active {
+  color: #20B2AA;
+}
+
+.mobile-nav-btn.active svg {
+  color: #20B2AA;
+  transform: translateY(-1px);
+}
+
 /* Modals */
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .modal-card {
@@ -474,4 +561,78 @@ button, input, select, textarea {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================= */
+/* 📱 MOBILE RESPONSIVE MEDIA QUERIES (iPhone, Android, Tablets) */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar-desktop {
+    display: none !important;
+  }
+
+  .mobile-bottom-nav {
+    display: flex;
+  }
+
+  .main-content {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .page-body {
+    padding: 1rem 0.85rem 5.5rem 0.85rem;
+  }
+
+  .med-card {
+    padding: 1.15rem 1rem;
+    border-radius: 14px;
+  }
+
+  .stepper-header {
+    display: none;
+  }
+
+  .mobile-stepper-compact {
+    display: block;
+  }
+
+  /* Form and grid adjustments */
+  .chip-btn {
+    flex: 1 1 auto;
+    font-size: 0.82rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .toggle-item {
+    padding: 0.75rem 0.9rem;
+  }
+
+  /* Modal scaling */
+  .modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .modal-card {
+    max-height: 94vh;
+    border-radius: 16px;
+  }
+
+  /* Responsive Tables */
+  .table-responsive-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  /* Compact button styling on mobile */
+  .btn {
+    font-size: 0.88rem;
+    padding: 0.6rem 1rem;
+  }
 }

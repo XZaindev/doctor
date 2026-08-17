@@ -110,17 +110,17 @@ export default function RecordsScreen({
   return (
     <div className="animate-fade-in" style={{ paddingBottom: '3rem' }}>
       {/* Top Search & Filter Bar */}
-      <div className="med-card" style={{ marginBottom: '1.5rem', padding: '1.25rem' }}>
+      <div className="med-card" style={{ marginBottom: '1.25rem', padding: '1rem 1.25rem' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '1rem'
+          gap: '0.75rem'
         }}>
           {/* Search Box */}
-          <div style={{ position: 'relative', flex: '1 1 280px', maxWidth: '400px' }}>
-            <Search size={18} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '11px' }} />
+          <div style={{ position: 'relative', flex: '1 1 240px', width: '100%' }}>
+            <Search size={18} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '13px' }} />
             <input
               type="text"
               className="form-input"
@@ -131,11 +131,11 @@ export default function RecordsScreen({
             />
           </div>
 
-          {/* Filters */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          {/* Filters & Actions */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', width: '100%', justifyContent: 'flex-start' }}>
             <select
               className="form-select"
-              style={{ width: 'auto' }}
+              style={{ width: 'auto', flex: '1 1 130px', minHeight: '38px', padding: '0.45rem 0.75rem' }}
               value={filterEligibility}
               onChange={(e) => setFilterEligibility(e.target.value)}
             >
@@ -146,7 +146,7 @@ export default function RecordsScreen({
 
             <select
               className="form-select"
-              style={{ width: 'auto' }}
+              style={{ width: 'auto', flex: '1 1 130px', minHeight: '38px', padding: '0.45rem 0.75rem' }}
               value={filterSeverity}
               onChange={(e) => setFilterSeverity(e.target.value)}
             >
@@ -157,12 +157,21 @@ export default function RecordsScreen({
               <option value="Severe">Severe Anemia</option>
             </select>
 
-            <button className="btn btn-secondary" onClick={exportAllCSV} title="Export entire cohort database to CSV">
-              <FileSpreadsheet size={16} /> Export CSV
+            <button
+              className="btn btn-secondary"
+              onClick={exportAllCSV}
+              style={{ flex: '1 1 110px', minHeight: '38px', padding: '0.45rem 0.75rem', fontSize: '0.82rem' }}
+              title="Export entire cohort database to CSV"
+            >
+              <FileSpreadsheet size={15} /> CSV
             </button>
 
-            <button className="btn btn-primary" onClick={onNewPatient}>
-              <Plus size={16} /> New Entry
+            <button
+              className="btn btn-primary"
+              onClick={onNewPatient}
+              style={{ flex: '1 1 110px', minHeight: '38px', padding: '0.45rem 0.75rem', fontSize: '0.82rem' }}
+            >
+              <Plus size={15} /> New
             </button>
           </div>
         </div>
@@ -170,7 +179,7 @@ export default function RecordsScreen({
 
       {/* Database Table Card */}
       <div className="med-card" style={{ padding: 0, overflow: 'hidden' }}>
-        <div style={{ overflowX: 'auto' }}>
+        <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
             <thead>
               <tr style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0', color: '#475569', fontWeight: '700' }}>

@@ -52,42 +52,42 @@ export default function SummaryScreen({
         background: '#ffffff',
         border: '1px solid #e2e8f0',
         borderRadius: '16px',
-        padding: '1.25rem 1.5rem',
-        marginBottom: '1.5rem',
+        padding: '1rem 1.25rem',
+        marginBottom: '1.25rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '1rem',
+        gap: '0.85rem',
         boxShadow: 'var(--shadow-sm)'
       }}>
-        <div>
-          <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#008B8B', textTransform: 'uppercase' }}>
+        <div style={{ minWidth: '220px' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#008B8B', textTransform: 'uppercase' }}>
             eCRF Verification & Review
           </span>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: '800', margin: '2px 0 0 0', color: '#0f172a' }}>
-            Patient Case Summary ({patientData.patient_id})
+          <h2 style={{ fontSize: '1.25rem', fontWeight: '800', margin: '2px 0 0 0', color: '#0f172a' }}>
+            Case Summary ({patientData.patient_id})
           </h2>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
-          <button className="btn btn-secondary" onClick={onEdit}>
-            <Edit3 size={16} /> Edit
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', width: '100%', maxWidth: '520px' }}>
+          <button className="btn btn-secondary" onClick={onEdit} style={{ flex: '1 1 70px', padding: '0.55rem 0.75rem' }}>
+            <Edit3 size={15} /> Edit
           </button>
-          <button className="btn btn-outline" onClick={() => onOpenPreview(patientData)}>
-            <Printer size={16} /> Print / Preview
+          <button className="btn btn-outline" onClick={() => onOpenPreview(patientData)} style={{ flex: '1 1 120px', padding: '0.55rem 0.75rem' }}>
+            <Printer size={15} /> Preview
           </button>
-          <button className="btn btn-secondary" onClick={() => onExportPDF(patientData)}>
-            <Download size={16} /> Export PDF
+          <button className="btn btn-secondary" onClick={() => onExportPDF(patientData)} style={{ flex: '1 1 110px', padding: '0.55rem 0.75rem' }}>
+            <Download size={15} /> PDF
           </button>
-          <button className="btn btn-primary" onClick={handleSave}>
-            <Save size={16} /> Save Record
+          <button className="btn btn-primary" onClick={handleSave} style={{ flex: '1 1 130px', padding: '0.55rem 0.75rem' }}>
+            <Save size={15} /> Save Record
           </button>
         </div>
       </div>
 
       {/* Main Clinical Summary Card */}
-      <div className="med-card" style={{ padding: '2rem' }}>
+      <div className="med-card" style={{ padding: '1.5rem' }}>
         {/* Header Block */}
         <div style={{
           display: 'flex',
