@@ -20,16 +20,7 @@ export default function Sidebar({ activeTab, setActiveTab, doctor, onOpenAuth, p
   ];
 
   return (
-    <aside className="sidebar-desktop" style={{
-      width: '260px',
-      backgroundColor: '#0f172a',
-      color: '#f8fafc',
-      display: 'flex',
-      flexDirection: 'column',
-      borderRight: '1px solid #1e293b',
-      flexShrink: 0,
-      userSelect: 'none'
-    }}>
+    <aside className="sidebar-desktop">
       {/* Brand Header */}
       <div style={{
         padding: '1.5rem 1.25rem',
