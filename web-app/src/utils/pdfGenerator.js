@@ -74,7 +74,7 @@ export const downloadPatientPDF = (patientData, doctorName = 'Dr. Mohammed Al-Hu
       ['Age / Gender', `${patientData.age_years ? patientData.age_years + ' years' : '—'} / ${patientData.gender || '—'}`],
       ['Marital / Residence Status', `${patientData.marital_status || '—'} / ${patientData.residence_type || '—'}`],
       ['Education / Employment', `${patientData.education_level || '—'} / ${patientData.employment_status || '—'}`],
-      ['Weight / Height / BMI', `${patientData.weight_kg ? patientData.weight_kg + ' kg' : '—'} / ${patientData.height_cm ? patientData.height_cm + ' cm' : '—'} (${bmiVal ? `${bmiVal} kg/m² - ${bmiCat?.category}` : '—'})`],
+      ['Weight / Height / BMI', `${patientData.weight_kg ? patientData.weight_kg + ' kg' : '—'} / ${patientData.height_cm ? patientData.height_cm + ' cm' : '—'} (${bmiVal ? `${bmiVal} kg/m² - ${bmiCat?.category || ''}` : '—'})`],
     ],
     theme: 'grid',
     headStyles: { fillColor: primaryTeal, textColor: 255, fontStyle: 'bold', fontSize: 9 },
@@ -84,14 +84,20 @@ export const downloadPatientPDF = (patientData, doctorName = 'Dr. Mohammed Al-Hu
   });
 
   // 2. Medical History & Dialysis
+  const comorbiditiesText = Array.isArray(patientData.comorbidities)
+    ? (patientData.comorbidities.length ? patientData.comorbidities.join(', ') : 'None reported')
+    : (patientData.comorbidities || 'None reported');
+
+  const y1 = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY : 75;
+
   autoTable(doc, {
-    startY: doc.lastAutoTable.finalY + 4,
+    startY: y1 + 4,
     head: [['2. Clinical History & Dialysis Parameters', 'Value']],
     body: [
-      ['Primary Cause of ESRD', patientData.esrd_cause === 'Other' ? `Other: ${patientData.esrd_cause_other}` : (patientData.esrd_cause || '—')],
+      ['Primary Cause of ESRD', patientData.esrd_cause === 'Other' ? `Other: ${patientData.esrd_cause_other || '—'}` : (patientData.esrd_cause || '—')],
       ['CKD Duration / Hospitalizations', `${patientData.ckd_duration_years ? patientData.ckd_duration_years + ' years' : '—'} / ${patientData.hospitalization_count || '—'}`],
-      ['Associated Comorbidities', patientData.comorbidities?.length ? patientData.comorbidities.join(', ') : 'None reported'],
-      ['Dialysis Regimen', `${patientData.dialysis_duration_value ? `${patientData.dialysis_duration_value} ${patientData.dialysis_duration_unit}` : '—'} | ${patientData.dialysis_sessions_per_week || '—'} (${patientData.session_duration || '—'})`],
+      ['Associated Comorbidities', comorbiditiesText],
+      ['Dialysis Regimen', `${patientData.dialysis_duration_value ? `${patientData.dialysis_duration_value} ${patientData.dialysis_duration_unit || ''}` : '—'} | ${patientData.dialysis_sessions_per_week || '—'} (${patientData.session_duration || '—'})`],
       ['Vascular Access & Kt/V', `${patientData.vascular_access_type || '—'} | Kt/V: ${patientData.kt_v || 'Not provided'}`],
     ],
     theme: 'grid',
@@ -102,8 +108,10 @@ export const downloadPatientPDF = (patientData, doctorName = 'Dr. Mohammed Al-Hu
   });
 
   // 3. Laboratory Findings
+  const y2 = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY : 120;
+
   autoTable(doc, {
-    startY: doc.lastAutoTable.finalY + 4,
+    startY: y2 + 4,
     head: [['3. Laboratory Investigation', 'Result', 'Reference Context']],
     body: [
       ['Hemoglobin (Hb)', `${formatNumber(patientData.hemoglobin_g_dl)} g/dL`, `Severity: ${patientData.anemia_severity || '—'}`],
@@ -121,8 +129,10 @@ export const downloadPatientPDF = (patientData, doctorName = 'Dr. Mohammed Al-Hu
   });
 
   // 4. Pharmacotherapy & Transfusions
+  const y3 = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY : 175;
+
   autoTable(doc, {
-    startY: doc.lastAutoTable.finalY + 4,
+    startY: y3 + 4,
     head: [['4. Pharmacotherapy & Transfusion History', 'Details']],
     body: [
       ['Erythropoiesis-Stimulating Agent (ESA)', patientData.esa_therapy ? `Yes (${patientData.esa_dose_frequency || 'Dose not specified'})` : 'No ESA therapy'],
@@ -138,7 +148,7 @@ export const downloadPatientPDF = (patientData, doctorName = 'Dr. Mohammed Al-Hu
   });
 
   // Footer & Signature Area
-  const finalY = doc.lastAutoTable.finalY + 8;
+  const finalY = (doc.lastAutoTable && doc.lastAutoTable.finalY ? doc.lastAutoTable.finalY : 230) + 8;
   if (finalY < 265) {
     doc.setDrawColor(200, 200, 200);
     doc.line(14, finalY + 12, 75, finalY + 12);
