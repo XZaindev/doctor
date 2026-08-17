@@ -1,0 +1,136 @@
+{
+  "name": "anemia-research-app",
+  "version": "1.0.0",
+  "description": "React Native mobile app for anemia research data collection",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start",
+    "start:ios": "expo start --ios",
+    "start:android": "expo start --android",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "build:ios": "eas build --platform ios",
+    "build:android": "eas build --platform android",
+    "build:ios:local": "eas build --platform ios --local",
+    "build:android:local": "eas build --platform android --local",
+    "submit:ios": "eas submit --platform ios",
+    "submit:android": "eas submit --platform android",
+    "install-deps": "npm install && npx expo prebuild",
+    "clean": "rm -rf node_modules && npm install",
+    "lint": "eslint src/",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "^0.73.0",
+    "expo": "^51.0.0",
+    "@react-navigation/native": "^6.1.17",
+    "@react-navigation/native-stack": "^6.9.26",
+    "react-native-screens": "^3.29.0",
+    "react-native-safe-area-context": "^4.7.4",
+    "@supabase/supabase-js": "^2.38.4",
+    "@react-native-async-storage/async-storage": "^1.21.0",
+    "react-native-svg": "^14.0.0",
+    "react-native-pdf-lib": "^7.9.0",
+    "react-native-share": "^8.0.5",
+    "react-native-file-access": "^3.0.4",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "axios": "^1.6.2",
+    "date-fns": "^2.30.0",
+    "expo-permissions": "^14.4.0",
+    "expo-document-picker": "^11.5.4",
+    "expo-secure-store": "^12.3.1",
+    "expo-constants": "^15.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.73.0",
+    "eslint": "^8.50.0",
+    "eslint-config-expo": "^7.0.0",
+    "jest": "^29.7.0",
+    "@testing-library/react-native": "^12.4.0",
+    "eas-cli": "^5.9.1"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "medical",
+    "research",
+    "anemia",
+    "supabase",
+    "healthcare"
+  ],
+  "author": "Your Name / Institution",
+  "license": "MIT",
+  "private": true,
+  "expo": {
+    "name": "Anemia Research Study",
+    "slug": "anemia-research",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F5F7F6"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTabletMode": true,
+      "bundleIdentifier": "com.anemiaresearch.study",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs camera access to capture patient photos",
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photo library",
+        "NSLocationWhenInUseUsageDescription": "This app needs location access"
+      }
+    },
+    "android": {
+      "versionCode": 1,
+      "package": "com.anemiaresearch.study",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F5F7F6"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ],
+      "expo-file-access",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them."
+        }
+      ]
+    ],
+    "scheme": "anemia-research",
+    "extra": {
+      "eas": {
+        "projectId": "your-eas-project-id"
+      }
+    }
+  }
+}
